@@ -1,10 +1,12 @@
 # Vehicle Price Prediction
 
 #### Streamlit Deployment:
-[![asciicast](https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Streamlit-logo-primary-colormark-darktext.png/1024px-Streamlit-logo-primary-colormark-darktext.png)](https://github.com/muhammedakar/Vehicle_Price_Prediction/blob/master/assets/Vehicle_Price_Predict_Deployment.mp4)
-
+https://github.com/muhammedakar/Vehicle_Price_Prediction/assets/99355169/797bb474-0ca0-4232-ae02-6d34819959d3
 
 #### Dataset Story:
+
+
+
 This dataset provides comprehensive information about used cars, making it an excellent resource for a variety of analytical and predictive tasks.
 One of the primary applications of this data is in price prediction, where it can be used to exemplify the use of linear regression in Machine Learning.
 By analyzing factors such as make, model, year, mileage, and condition, we can develop models that predict the market value of a used car. Additionally, this dataset can be used for other purposes like trend analysis,
