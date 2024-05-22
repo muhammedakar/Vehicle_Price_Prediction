@@ -9,6 +9,7 @@ from xgboost import XGBRegressor
 from catboost import CatBoostRegressor
 from lightgbm import LGBMRegressor
 from sklearn.linear_model import LinearRegression
+import joblib
 
 eda.set_display()
 
@@ -157,6 +158,8 @@ def base_models(X, y):
 rf_model = CatBoostRegressor(random_state=42, max_depth=2, learning_rate=0.1, verbose=False).fit(X, y)
 np.mean(np.sqrt(-cross_val_score(rf_model, X, y, cv=3, scoring="neg_mean_squared_error")))
 np.mean(cross_val_score(rf_model, X, y, cv=3, scoring="r2"))
+
+joblib.dump(rf_model, "deployment/final_model.pkl")
 
 eda.plot_importance(rf_model, X)
 
