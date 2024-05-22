@@ -1,7 +1,13 @@
 # Vehicle Price Prediction
 
 #### Streamlit Deployment:
-https://github.com/muhammedakar/Vehicle_Price_Prediction/assets/99355169/797bb474-0ca0-4232-ae02-6d34819959d3
+
+
+
+https://github.com/muhammedakar/Vehicle_Price_Prediction/assets/99355169/d5264845-b7b6-4862-9af2-f9b724745f66
+
+
+
 
 #### Dataset Story:
 
