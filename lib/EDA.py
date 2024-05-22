@@ -238,8 +238,8 @@ def high_correlated_cols(dataframe, num_cols, plot=False, corr_th=0.90):
     return drop_list
 
 
-def plot_importance(model, features, X, save=False):
-    feature_imp = pd.DataFrame({'Value': model.feature_importances_, 'Feature': features.columns})
+def plot_importance(model, X, save=False):
+    feature_imp = pd.DataFrame({'Value': model.feature_importances_, 'Feature': X.columns})
     plt.figure(figsize=(10, 10))
     sns.set(font_scale=1)
     sns.barplot(x="Value", y="Feature", data=feature_imp.sort_values(by="Value",

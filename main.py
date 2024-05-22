@@ -1,9 +1,7 @@
 import pandas as pd
 import numpy as np
 from lib import EDA as eda, Feng as feng
-from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import GridSearchCV
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
@@ -66,6 +64,8 @@ for col in cat_cols:
 eda.plot_numerical_col(df, num_cols)
 
 eda.plot_categoric_col(df, cat_cols)
+
+eda.high_correlated_cols(df, num_cols, plot=True)
 
 for col in cat_cols:
     eda.target_summary_with_cat(df, 'selling_price', col)
@@ -154,43 +154,10 @@ def base_models(X, y):
     print(score.T)
 
 
-base_models(X, y)
-
-catboost_params = {"iterations": [200, 750, 500],
-                   "learning_rate": [0.01, 0.1, 0.5, 0.6],
-                   "depth": [2, 3, 6, 8]}
-
-classifiers = [("CatBoost", CatBoostRegressor(), catboost_params)]
-
-
-def hyperparameter_optimization(X, y, cv=3):
-    print("Hyperparameter Optimization....")
-    best_models = {}
-    score = pd.DataFrame(index=['rmse', 'r2_score', 'iter', 'rate', 'depth'])
-    for name, classifier, params in classifiers:
-        gs_best = GridSearchCV(classifier, params, cv=cv, n_jobs=-1, verbose=False).fit(X, y)
-        final_model = classifier.set_params(**gs_best.best_params_)
-        rmse = np.mean(np.sqrt(-cross_val_score(classifier, X, y, cv=3, scoring="neg_mean_squared_error")))
-        r2 = np.mean(cross_val_score(classifier, X, y, cv=3, scoring="r2"))
-        score[name] = [rmse, r2, gs_best.best_params_['iterations'], gs_best.best_params_['learning_rate'],
-                       gs_best.best_params_['depth']]
-        print(f'{name} hesaplandı...')
-        best_models[name] = final_model
-    print(score.T)
-    return best_models
-
-
-hyperparameter_optimization(X, y)
-
-rf_model = CatBoostRegressor(random_state=42, max_depth=2, learning_rate=0.1).fit(X, y)
+rf_model = CatBoostRegressor(random_state=42, max_depth=2, learning_rate=0.1, verbose=False).fit(X, y)
 np.mean(np.sqrt(-cross_val_score(rf_model, X, y, cv=3, scoring="neg_mean_squared_error")))
 np.mean(cross_val_score(rf_model, X, y, cv=3, scoring="r2"))
 
-mean_selling_price = y.mean()
-y_pred = np.full(y.shape, mean_selling_price)
-
-np.sqrt(mean_squared_error(y, y_pred))
-
-eda.plot_importance(rf_model, X, X)
+eda.plot_importance(rf_model, X)
 
 eda.val_curve_params(rf_model, X, y, "max_depth", range(1, 11), scoring="neg_mean_squared_error")
